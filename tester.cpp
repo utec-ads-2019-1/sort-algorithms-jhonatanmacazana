@@ -1,5 +1,12 @@
 #include "tester.h"
 
+void integersBubble(void *elements, int first, int second) {
+    int *array = (int*) elements;
+    if (array[first] > array[second]) {
+        swap(array[first], array[second]);
+    }
+}
+
 Sort* Tester::getSort(Algorithm sort, void *array, size_t size) {
     switch (sort) {
         case bubblesort: return new BubbleSort(array, size);
@@ -12,7 +19,15 @@ Sort* Tester::getSort(Algorithm sort, void *array, size_t size) {
     }
 }
 
-void Tester::integerSorts(int *array, size_t size, void (*compare)(void*, int, int)) {
+fptr Tester::getCompare(Algorithm sort) {
+    switch (sort) {
+        case bubblesort: return &integersBubble;
+        //case selectsort: return &integersSelect;
+        default: throw invalid_argument("Not a valid comparer");
+    }
+}
+
+void Tester::integerSorts(int *array, size_t size) {
     Sort* sort;
     int temp[size];
 
@@ -22,7 +37,7 @@ void Tester::integerSorts(int *array, size_t size, void (*compare)(void*, int, i
     for (int i = 0; i < numberOfAlgorithms; i++) {
         copy(array, array + size, temp);
         sort = getSort(algorithm[i], temp, size);
-        sort->execute(compare);
+        sort->execute(getCompare(algorithm[i]));
         ASSERT(is_sorted(temp, temp + size), "The " + sort->name() + " is not ordering all the elements");
     }
 }

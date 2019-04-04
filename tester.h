@@ -30,12 +30,15 @@ using namespace std;
 
 enum Algorithm { bubblesort, selectsort, insertsort, shellsort, quicksort, mergesort };
 
+typedef void (*fptr)(void*, int, int);
+
 class Tester {
     private:
         static Sort* getSort(Algorithm, void *, size_t);
+        static fptr getCompare(Algorithm sort);
 
     public:
-        static void integerSorts(int *, size_t, void (*)(void*, int, int));
+        static void integerSorts(int *, size_t);
 };
 
 #endif
