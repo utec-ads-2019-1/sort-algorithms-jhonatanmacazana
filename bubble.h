@@ -4,7 +4,7 @@
 #include "sort.h"
 #include <algorithm>
 
-class BubbleSort : public Sort {       
+class BubbleSort : public Sort {
     public:
         BubbleSort(void *elements, size_t size) : Sort(elements, size) {}
 
@@ -20,3 +20,4 @@ class BubbleSort : public Sort {
 };
 
 #endif
+
